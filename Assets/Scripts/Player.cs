@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class Player : MonoBehaviour
 {
+	Animator animator;
 
     public float gravity;
     public Vector2 velocity;
@@ -33,6 +35,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         cameraController = Camera.main.GetComponent<CameraController>();
+		animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -42,11 +45,12 @@ public class Player : MonoBehaviour
 
         if (isGrounded || groundDistance <= jumpGroundThreshold)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+			
+			if (Input.GetKeyDown(KeyCode.Space))
             {
                 isGrounded = false;
                 velocity.y = jumpVelocity;
-                isHoldingJump = true;
+				isHoldingJump = true;
                 holdJumpTimer = 0;
 
                 if (fall != null)
@@ -60,6 +64,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.Space))
         {
+			
             isHoldingJump = false;
         }
 
@@ -84,7 +89,7 @@ public class Player : MonoBehaviour
 
         if (!isGrounded)
         {
-            if (isHoldingJump)
+			if (isHoldingJump)
             {
                 holdJumpTimer += Time.fixedDeltaTime;
                 if (holdJumpTimer >= maxHoldJumpTime)
